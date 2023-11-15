@@ -1,13 +1,20 @@
 package be.ipam.student.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "student")
-public class Student {
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class StudentEntity {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -25,7 +32,7 @@ public class Student {
             inverseJoinColumns = @JoinColumn(name = "CourseId")
     )
     //@Transient
-    private Set<Course> courses = new HashSet<>();
+    private Set<CourseEntity> courses = new HashSet<>();
 
     public Long getStudentId() {
         return studentId;
@@ -43,11 +50,11 @@ public class Student {
         this.name = name;
     }
 
-    public Set<Course> getCourses() {
+    public Set<CourseEntity> getCourses() {
         return courses;
     }
 
-    public void setCourses(Set<Course> courses) {
+    public void setCourses(Set<CourseEntity> courses) {
         this.courses = courses;
     }
 }

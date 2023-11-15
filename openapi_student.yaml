@@ -7,15 +7,15 @@ info:
 servers:
   - url: 'https'
 tags:
-  - name: student
+  - name: Student
     description: Students Info
-  - name: course
+  - name: Course
     description: Courses Info
 paths:
-  /student:
+  /students:
     get:
       tags:
-        - student
+        - Student
       summary: Get all students
       description: Get all students
       operationId: getStudents
@@ -28,9 +28,10 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Student'
+  /student:
     post:
       tags:
-        - student
+        - Student
       summary: Create a student
       description: Create a student
       operationId: createStudent
@@ -48,6 +49,90 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Student'
+  /courses:
+    get:
+      tags:
+        - Course
+      summary: Get all courses
+      description: Get all courses
+      operationId: getCourses
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Course'
+  /course:
+    post:
+      tags:
+        - Course
+      summary: Create a course
+      description: Create a course
+      operationId: createCourse
+      requestBody:
+        description: Course object that needs to be added
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Course'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+
+  /student/{studentId}:
+    get:
+      tags:
+        - Student
+      summary: Get a student by ID
+      description: Get a student by ID
+      operationId: getStudentById
+      parameters:
+        - name: studentId
+          in: path
+          description: ID of the student to get
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+
+  /course/{courseId}:
+      get:
+        tags:
+          - Course
+        summary: Get a course by ID
+        description: Get a course by ID
+        operationId: getCourseById
+        parameters:
+          - name: courseId
+            in: path
+            description: ID of the course to get
+            required: true
+            schema:
+              type: integer
+              format: int64
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Course'
+
 components:
     schemas:
         Student:
@@ -55,29 +140,30 @@ components:
           required:
             - id
             - name
-            - email
-            - course
+            - courses
           properties:
             id:
               type: integer
               format: int64
             name:
               type: string
-            email:
-              type: string
-            course:
-              type: string
+            courses:
+              type: array
+              items:
+                $ref: '#/components/schemas/Course'
         Course:
           type: object
           required:
             - id
-            - name
-            - description
+            - title
+            - students
           properties:
             id:
               type: integer
               format: int64
-            name:
+            title:
               type: string
-            description:
-              type: string
+            students:
+                type: array
+                items:
+                    $ref: '#/components/schemas/Student'

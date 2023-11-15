@@ -1,19 +1,19 @@
 package be.ipam.student.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
 import java.util.Set;
 
 @Getter
 @Setter
 @Builder
-public class StudentDTO {
-    private Long studentId;
-    private String name;
-    private Set<CourseDTO> courses;
+public class CourseDTO {
+    private Long courseId;
+    private String title;
+    @JsonIgnore
+    private Set<StudentDTO> students;
 }

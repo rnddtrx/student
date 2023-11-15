@@ -1,21 +1,30 @@
 package be.ipam.student.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "course")
-public class Course {
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class CourseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long courseId;
     private String title;
 
+
+    @JsonIgnore
     @ManyToMany(mappedBy = "courses", fetch = FetchType.LAZY)
-    private Set<Student> students = new HashSet<>();
+    private Set<StudentEntity> students = new HashSet<>();
 
     public Long getCourseId() {
         return courseId;
@@ -33,11 +42,11 @@ public class Course {
         this.title = title;
     }
 
-    public Set<Student> getStudents() {
+    public Set<StudentEntity> getStudents() {
         return students;
     }
 
-    public void setStudents(Set<Student> students) {
-        this.students = students;
+    public void setStudents(Set<StudentEntity> studentEntities) {
+        this.students = studentEntities;
     }
 }
