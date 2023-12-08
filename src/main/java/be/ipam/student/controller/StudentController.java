@@ -61,15 +61,33 @@ public class StudentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(studentMapper.convertToDTO(createdStudent));
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<StudentDTO> registerStudent(@RequestBody StudentDTO studentDTO){
+        StudentEntity createdStudent = studentService.createStudent(studentMapper.convertToEntity(studentDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(studentMapper.convertToDTO(createdStudent));
+    }
+
     //PUT Update student -- crUd
     @PutMapping("/{studentId}")
     public ResponseEntity<StudentEntity> updateStudent( @PathVariable Long studentId, @RequestBody StudentDTO studentToUpdate){
         Optional<StudentEntity> existingStudent = studentService.getStudentById(studentId);
         if (existingStudent.isPresent()) {
             studentToUpdate.setStudentId(studentId);
-            //StudentEntity updatedStudent = studentService.updateStudent(studentId,studentMapper.convertToEntity(studentToUpdate));
-            //return ResponseEntity.ok(updatedStudent);
-            return null;
+            StudentEntity updatedStudent = studentService.updateStudent(studentId,studentMapper.convertToEntity(studentToUpdate));
+            return ResponseEntity.ok(updatedStudent);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    //PATCH Update student -- crUd
+    @PatchMapping("/{studentId}")
+    public ResponseEntity<StudentEntity> patchStudent( @PathVariable Long studentId, @RequestBody StudentDTO studentToUpdate){
+        Optional<StudentEntity> existingStudent = studentService.getStudentById(studentId);
+        if (existingStudent.isPresent()) {
+            studentToUpdate.setStudentId(studentId);
+            StudentEntity updatedStudent = studentService.patchStudent(studentId,studentMapper.convertToEntity(studentToUpdate));
+            return ResponseEntity.ok(updatedStudent);
         } else {
             return ResponseEntity.notFound().build();
         }

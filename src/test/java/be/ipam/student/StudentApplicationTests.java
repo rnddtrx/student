@@ -47,4 +47,10 @@ class StudentApplicationTests {
 
     }
 
+    @Test
+    void testFindStudentByLogin(){
+        StudentEntity myStudentEntity = studentService.findByLogin("chirac").get();
+        System.out.println(myStudentEntity.getName());
+    }
+
 }

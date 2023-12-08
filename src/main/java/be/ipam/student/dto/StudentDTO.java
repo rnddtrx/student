@@ -15,5 +15,7 @@ import java.util.Set;
 public class StudentDTO {
     private Long studentId;
     private String name;
+    private String login;
+    private String password;
     private Set<CourseDTO> courses;
 }

@@ -15,6 +15,7 @@ public class StudentMapper {
         return StudentDTO.builder()
                 .studentId(studentEntity.getStudentId())
                 .name(studentEntity.getName())
+                .login(studentEntity.getLogin())
                 .courses(studentEntity.getCourses() != null ?
                             studentEntity.getCourses().stream().map(
                             courseEntity -> CourseDTO.builder()
@@ -29,6 +30,8 @@ public class StudentMapper {
         return StudentEntity.builder()
                 .studentId(studentDTO.getStudentId())
                 .name(studentDTO.getName())
+                .login(studentDTO.getLogin())
+                .password(studentDTO.getPassword())
                 .courses(studentDTO.getCourses() != null
                         ? studentDTO.getCourses().stream().map(
                         courseDTO -> CourseEntity.builder()
